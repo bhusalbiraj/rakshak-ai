@@ -45,10 +45,12 @@ Three-layer ensemble system:
 
 # 📁 Project Structure
 
+```
 rakshak-ai/
 ├── app.py              # Main Gradio application
 ├── requirements.txt    # Dependencies
 └── README.md           # This file
+```
 
 # Dataset
 555 labeled Nepali social media samples covering all toxicity categories.
