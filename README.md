@@ -44,10 +44,11 @@ Three-layer ensemble system:
 | 5 | 🚨 Extreme Violence |
 
 # 📁 Project Structure
+
 rakshak-ai/
 ├── app.py              # Main Gradio application
 ├── requirements.txt    # Dependencies
-└── README.md          # This file
+└── README.md           # This file
 
 # Dataset
 555 labeled Nepali social media samples covering all toxicity categories.
