@@ -1,0 +1,6 @@
+groq
+transformers
+torch
+pandas
+huggingface_hub
+gradio
