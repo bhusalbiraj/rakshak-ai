@@ -1,49 +1,70 @@
 # 🛡️ RakshakAI
-**Nepali Social Media Content Moderation System**
+### Multi-Label Toxicity Detection for Nepali Social Media
 
-[![HuggingFace Space](https://img.shields.io/badge/🤗-Live%20Demo-yellow)](https://huggingface.co/spaces/biraj-bhusal/rakshak-ai)
-[![Dataset](https://img.shields.io/badge/🤗-Dataset-blue)](https://huggingface.co/datasets/biraj-bhusal/rakshak-nepali-toxicity)
-[![Model](https://img.shields.io/badge/🤗-Model-green)](https://huggingface.co/biraj-bhusal/rakshak-ai-model)
+[![Live Demo](https://img.shields.io/badge/🤗-Live%20Demo-yellow)](https://huggingface.co/spaces/biraj-bhusal/rakshak-ai)
+[![Paper](https://img.shields.io/badge/📄-Paper-red)](https://zenodo.org/records/20850923)
+[![Label Model](https://img.shields.io/badge/🤗-Label%20Model-green)](https://huggingface.co/biraj-bhusal/rakshak-xlmr-large-v2)
+[![Severity Model](https://img.shields.io/badge/🤗-Severity%20Model-green)](https://huggingface.co/biraj-bhusal/rakshak-severity-v2)
+[![Curated Dataset](https://img.shields.io/badge/🤗-Curated%20Dataset-blue)](https://huggingface.co/datasets/biraj-bhusal/rakshak-all-data-combined)
+[![Augmented Dataset](https://img.shields.io/badge/🤗-Augmented%20Dataset-blue)](https://huggingface.co/datasets/biraj-bhusal/rakshak-nepali-toxicity-final)
 
-# 🔍 What is RakshakAI?
-AI-powered toxicity detection for Nepali social media content. 
-Detects hate speech, casteism, religious incitement, political defamation, 
-and cyberbullying in Nepali, Romanized Nepali, Mixed, and English text.
+Nepali social media has a serious toxic content problem — hate speech targeting ethnic minorities, caste-based discrimination, religious incitement, political defamation, and cyberbullying — yet almost no automated tools exist to detect it. RakshakAI is an early attempt to fix that.
 
-# Live Demo
-Try it here: https://huggingface.co/spaces/biraj-bhusal/rakshak-ai
+The system handles the unique challenge that Nepali users write in three very different forms: Devanagari script (नेपाली), Romanized Nepali (nepali), and code-mixed Nepali-English (bro yo totally wrong cha) — often within the same sentence.
 
-# How it works
+---
 
-Three-layer ensemble system:
-
-| Layer | Component | Purpose |
-|---|---|---|
-| 1 | LLaMA 3.3 70B | Deep language understanding |
-| 2 | XLM-RoBERTa + LoRA | Fine-tuned Nepali toxicity model |
-| 3 | Rule-based NLP | Nepali toxic word patterns |
-
-# Detection Categories
+## Detection Categories
 
 | Category | Description |
 |---|---|
-| Hate Speech | Attacks on ethnic groups (Madhesi, Tharu, Janajati) |
-| Casteism | Caste-based discrimination (Dalit, Brahmin) |
-| Religious Incitement | Attacks on religious groups |
-| Political Defamation | False attacks on politicians |
-| Cyberbullying | Personal targeting of individuals |
+| 🗣️ Hate Speech | Dehumanizing language or slurs targeting a group based on identity |
+| ⚠️ Casteism | Caste-based discrimination and slurs |
+| 🔥 Religious Incitement | Content attacking religious groups or inciting violence |
+| 🏛️ Political Defamation | False accusations targeting political figures |
+| 👤 Cyberbullying | Personal threats and harassment targeting individuals |
 
-# Severity Scale
+Labels are not mutually exclusive — a single post can trigger multiple categories simultaneously.
 
-| Score | Meaning |
+---
+
+## Severity Scale
+
+| Level | Meaning |
 |---|---|
-| 1 | ✅ Clean |
-| 2 | 🟡 Mildly Offensive |
-| 3 | 🟠 Clearly Harmful |
-| 4 | 🔴 Incites Action |
-| 5 | 🚨 Extreme Violence |
+| 1 | 🟢 Normal |
+| 2 | 🟠 Moderate |
+| 3 | 🔴 Toxic |
 
-# 📁 Project Structure
+---
+
+## How it works
+
+Two independent analysis approaches available side by side in the demo:
+
+- **LLaMA 3.3 70B** — zero-shot prompting with Nepal-specific cultural context for deeper language understanding
+- **XLM-RoBERTa Large + LoRA** — fine-tuned on a custom Nepali toxicity dataset, achieving F1 macro of 0.846 across all five categories
+
+---
+
+## Results
+
+| Model | F1 Macro | F1 Micro |
+|---|---|---|
+| XLM-RoBERTa Large + LoRA | 0.846 | 0.833 |
+
+---
+
+## Dataset
+
+| Dataset | Samples | Description |
+|---|---|---|
+| [Curated](https://huggingface.co/datasets/biraj-bhusal/rakshak-all-data-combined) | 1,574 | Manually collected + synthetic samples |
+| [Augmented](https://huggingface.co/datasets/biraj-bhusal/rakshak-nepali-toxicity-final) | 4,716 | Full training corpus with back-translation augmentation |
+
+---
+
+## Project Structure
 
 ```
 rakshak-ai/
@@ -52,24 +73,35 @@ rakshak-ai/
 └── README.md           # This file
 ```
 
-# Dataset
-555 labeled Nepali social media samples covering all toxicity categories.
-- Devanagari, Romanized Nepali, Mixed, English
-- Multi-label with severity scoring
-- Published: [rakshak-nepali-toxicity](https://huggingface.co/datasets/biraj-bhusal/rakshak-nepali-toxicity)
+---
 
-# Tech Stack
+## Tech Stack
+
 - **LLaMA 3.3 70B** via Groq API
-- **XLM-RoBERTa** fine-tuned with LoRA (PEFT)
-- **Gradio** for the interface
-- **HuggingFace** for model and dataset hosting
+- **XLM-RoBERTa Large** fine-tuned with LoRA/PEFT
+- **Gradio** for the demo interface
+- **HuggingFace** for model, dataset, and Space hosting
 
-# Roadmap
-- [ ] Add more training data (target: 2000+ samples)
-- [ ] Improve fine-tuned model accuracy
-- [ ] Add batch analysis feature
-- [ ] Add visualization dashboard
-- [ ] Support audio/video content
+---
 
-# Built by
-Biraj Bhusal — built in part of mastering ML end-to-end
+## Citation
+
+```bibtex
+@misc{bhusal2025rakshak,
+  author = {Bhusal, Biraj},
+  title = {RakshakAI: Multi-Label Toxicity Detection for Low-Resource Nepali Social Media Content},
+  year = {2025},
+  publisher = {Zenodo},
+  url = {https://zenodo.org/records/20850923}
+}
+```
+
+---
+
+## Content Warning
+
+This repository contains examples of toxic and offensive Nepali language for research purposes. The author does not endorse any views expressed in the dataset or examples.
+
+---
+
+**Developed by [Biraj Bhusal](https://huggingface.co/biraj-bhusal)**
