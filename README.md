@@ -12,6 +12,8 @@ Nepali social media has a serious toxic content problem — hate speech targetin
 
 The system handles the unique challenge that Nepali users write in three very different forms: Devanagari script (नेपाली), Romanized Nepali (nepali), and code-mixed Nepali-English (bro yo totally wrong cha) — often within the same sentence.
 
+> 💡 All predictions made through the live demo are anonymously logged and will be periodically reviewed, filtered for quality, and added to the training dataset to improve model accuracy over time.
+
 ---
 
 ## Detection Categories
