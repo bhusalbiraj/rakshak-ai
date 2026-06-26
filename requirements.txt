@@ -1,5 +1,6 @@
 groq
 transformers
+peft
 torch
 pandas
 huggingface_hub
